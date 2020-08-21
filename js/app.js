@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let navItems = [];
     // variable to hold the last active element "last element in the viewport"
     let lastActive = null;
+    // variable to hold the nav height
+    let navOffset;
     // flags to indicate when scrolling and changing the dom
     // flag to differ when the user is scrolling or when the program is scrolling
     let activeScroll = true;
@@ -94,6 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
         navList.appendChild(domFragment);
         // set the display again
         navList.style.display = 'block';
+        //
+        navOffset = navList.clientHeight;
     }
 
     // function to rebuild the nav
@@ -124,8 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
         triggerActive(e.target);
         // get the corresponding section for the clicked  nav item
         const targetElement = document.querySelector(`#${e.target.dataset.section}`);
-        // get the position of the section to scroll to
-        const elementPos = targetElement.offsetTop;
+        // get the position of the section to scroll to and making account for the nav height in small devices
+        const elementPos = targetElement.offsetTop - navOffset;
         // scroll to the wanted position with smooth behavior
         scroll({
             top: elementPos,
